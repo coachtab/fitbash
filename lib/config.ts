@@ -2,8 +2,7 @@ export const SITE_URL = "https://fitbash.com";
 export const SITE_NAME = "FitBash";
 export const TAGLINE = "Discover the exercises you'll actually keep doing.";
 
-// TODO: confirm Instagram handle before launch
-export const INSTAGRAM_HANDLE = "fitbash.app";
+export const INSTAGRAM_HANDLE = "thefitbash";
 export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`;
 
 // TODO: replace with real founder bio once provided

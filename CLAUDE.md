@@ -46,7 +46,7 @@ npm run db:studio    # prisma studio for inspecting waitlist_signups
 
 ## Visual non-negotiables
 
-- Background `#FAFAF7`, text `#0F0F0E`, single accent warm coral `#E2613D` (hover `#D95D3A`). No other colors. Whitespace separates sections, not borders.
+- Background sage `#D8E1D0`, text `#0F0F0E`, single accent warm coral `#E2613D` (hover `#D95D3A`). Muted text `#5C615A`, hairline `#B8C5AC`. No other colors. Whitespace separates sections, not borders. (Brief originally specified `#FAFAF7` off-white; the user explicitly rejected that for a fitness-friendlier palette — stay on sage until they say otherwise.)
 - Inter variable font, weights **400 + 500 only** (never 600 / 700). Loaded via `next/font/google` in [app/layout.tsx](app/layout.tsx).
 - No gradients, no shadows (one exception: subtle email-input focus state), no glow, no parallax, no scroll-jacking, no sticky CTAs, no animated backgrounds. Allowed motion: 200ms one-shot fade-in (`.fb-fade-in`) and the hero duel SVG cycle. All animations honor `prefers-reduced-motion`.
 - Button system, in full: solid coral, white text, 14px / 24px padding, 8px radius, hover 4% darker. That's it.

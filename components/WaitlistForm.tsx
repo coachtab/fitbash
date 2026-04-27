@@ -9,11 +9,21 @@ type Props = {
   variant?: "hero" | "final";
   /** Source attribution from the page's ?ref= query param, or "direct" */
   source?: string;
+  /** Submit button label — differentiated between hero and final CTA so the page doesn't read as a copy-paste */
+  submitLabel?: string;
+  /** Confirmation message shown in place of the form on success */
+  successMessage?: string;
   /** Visual: stack input/button on small screens; align inline on larger screens */
   className?: string;
 };
 
-export function WaitlistForm({ variant = "hero", source = "direct", className = "" }: Props) {
+export function WaitlistForm({
+  variant = "hero",
+  source = "direct",
+  submitLabel = "Get early access",
+  successMessage = "You're in. We'll email you when FitBash is ready.",
+  className = "",
+}: Props) {
   const emailId = useId();
   const consentId = useId();
   const [email, setEmail] = useState("");
@@ -55,9 +65,7 @@ export function WaitlistForm({ variant = "hero", source = "direct", className = 
         role="status"
         aria-live="polite"
       >
-        <p className="text-lg">
-          You&rsquo;re in. We&rsquo;ll email you when {variant === "final" ? "FitBash" : "FitBash"} is ready.
-        </p>
+        <p className="text-lg">{successMessage}</p>
       </div>
     );
   }
@@ -95,7 +103,7 @@ export function WaitlistForm({ variant = "hero", source = "direct", className = 
           disabled={submitting || !email}
           className="inline-flex items-center justify-center rounded-lg bg-coral px-6 py-3.5 text-white font-medium transition-colors hover:bg-coral-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {submitting ? "Adding…" : "Get early access"}
+          {submitting ? "Adding…" : submitLabel}
         </button>
       </div>
 

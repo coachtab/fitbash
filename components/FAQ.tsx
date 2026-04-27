@@ -21,25 +21,28 @@ export function FAQ() {
   return (
     <section className="px-6 py-24 md:py-32" aria-labelledby="faq-heading">
       <div className="mx-auto max-w-2xl">
+        <p className="text-xs uppercase tracking-[0.18em] text-muted">FAQ</p>
         <h2
           id="faq-heading"
-          className="text-[24px] md:text-[32px] font-medium tracking-tight mb-10"
+          className="mt-3 text-[28px] md:text-[40px] font-medium tracking-tight"
         >
-          Questions
+          Questions worth answering.
         </h2>
-        <div className="divide-y divide-hairline border-y border-hairline">
+        <div className="mt-12 border-t border-hairline">
           {faqs.map(({ q, a }) => (
-            <details key={q} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-medium">
+            <details key={q} className="group border-b border-hairline">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium transition-colors hover:text-coral">
                 <span>{q}</span>
                 <span
                   aria-hidden
-                  className="text-muted transition-transform group-open:rotate-45"
+                  className="grid h-6 w-6 shrink-0 place-items-center text-muted transition-transform duration-200 group-open:rotate-45"
                 >
-                  +
+                  <svg viewBox="0 0 12 12" width="12" height="12" fill="none">
+                    <path d="M6 1 V11 M1 6 H11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                  </svg>
                 </span>
               </summary>
-              <p className="mt-3 text-muted">{a}</p>
+              <p className="pb-6 pr-10 text-muted">{a}</p>
             </details>
           ))}
         </div>

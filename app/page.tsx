@@ -1,3 +1,4 @@
+import { SiteHeader } from "@/components/SiteHeader";
 import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
 import { WhyItWorks } from "@/components/WhyItWorks";
@@ -35,6 +36,7 @@ export default async function HomePage({
 
   return (
     <>
+      <SiteHeader />
       <Hero signupCount={signupCount} source={source} />
       <HowItWorks />
       <WhyItWorks />

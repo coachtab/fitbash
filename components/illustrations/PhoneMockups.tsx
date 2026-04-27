@@ -26,7 +26,7 @@ function PhoneFrame({
         width={FRAME_W - 4}
         height={FRAME_H - 4}
         rx={FRAME_R}
-        fill="#FAFAF7"
+        fill="#D8E1D0"
         stroke="#0F0F0E"
         strokeWidth="1.5"
       />

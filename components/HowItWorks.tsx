@@ -10,18 +10,27 @@ export function HowItWorks() {
   return (
     <section className="px-6 py-24 md:py-32" aria-labelledby="how-heading">
       <div className="mx-auto max-w-5xl">
-        <h2 id="how-heading" className="sr-only">
-          How it works
+        <p className="text-xs uppercase tracking-[0.18em] text-muted">How it works</p>
+        <h2
+          id="how-heading"
+          className="mt-3 max-w-xl text-[26px] md:text-[34px] font-medium tracking-tight"
+        >
+          Three small choices a day. That&rsquo;s the whole loop.
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-12">
-          {steps.map(({ Icon, title, body }) => (
-            <div key={title} className="text-center md:text-left">
-              <Icon className="h-16 w-16 mx-auto md:mx-0" />
+
+        <ol className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
+          {steps.map(({ Icon, title, body }, i) => (
+            <li key={title} className="flex flex-col">
+              <span className="text-sm tabular-nums text-coral">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="mt-4 h-px w-10 bg-hairline" />
+              <Icon className="mt-8 h-12 w-12" />
               <h3 className="mt-6 text-xl font-medium">{title}</h3>
               <p className="mt-2 text-muted">{body}</p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
