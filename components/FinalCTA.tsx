@@ -25,7 +25,6 @@ export function FinalCTA({ source }: Props) {
 
         <div className="mt-14 mx-auto max-w-md text-left">
           <WaitlistForm
-            variant="final"
             source={source}
             submitLabel="Notify me"
             successMessage="Got you. Talk soon."

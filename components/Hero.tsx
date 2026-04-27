@@ -48,7 +48,7 @@ export function Hero({ signupCount, source }: Props) {
               Discover the exercises you&rsquo;ll actually keep doing.
             </p>
             <div className="mt-10 max-w-md">
-              <WaitlistForm variant="hero" source={source} submitLabel="Get early access" />
+              <WaitlistForm source={source} submitLabel="Get early access" />
             </div>
             <p className="mt-5 text-sm text-muted">
               {showCount

@@ -5,8 +5,6 @@ import { useState, useId, FormEvent } from "react";
 type Status = "idle" | "submitting" | "success" | "error";
 
 type Props = {
-  /** Used to render two distinct forms on the same page (hero + final CTA) */
-  variant?: "hero" | "final";
   /** Source attribution from the page's ?ref= query param, or "direct" */
   source?: string;
   /** Submit button label — differentiated between hero and final CTA so the page doesn't read as a copy-paste */
@@ -18,7 +16,6 @@ type Props = {
 };
 
 export function WaitlistForm({
-  variant = "hero",
   source = "direct",
   submitLabel = "Get early access",
   successMessage = "You're in. We'll email you when FitBash is ready.",
