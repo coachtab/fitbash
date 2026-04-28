@@ -6,16 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 FitBash is a fitness exercise discovery app being validated through Instagram. **This repo is the pre-launch marketing landing page only — not the app.** Its single job is converting Instagram bio-link visitors into email subscribers for a launch notification. Most traffic is mobile, in the Instagram in-app browser, DACH region.
 
-The full build brief is at [docs/BRIEF.md](docs/BRIEF.md). The constraints below are the durable rules every session must respect.
+The original brief at [docs/BRIEF.md](docs/BRIEF.md) is **historical context** — many of its specific copy and visual rules have been overridden by direct user feedback. The constraints in *this* file reflect the current state and are the authoritative rules.
 
 ## Tech stack
 
 - **Framework:** Next.js 16.2 (App Router) + React 19 + TypeScript. Turbopack is on by default. The bundled docs at `node_modules/next/dist/docs/` are the source of truth — APIs differ from older Next.
 - **Styling:** Tailwind v4 (CSS-first config in [app/globals.css](app/globals.css) via `@theme`). No component library — write markup directly.
+- **Fonts:** Fraunces (serif, with `opsz` and `SOFT` axes) for display + Hanken Grotesk (sans) for body, both via `next/font/google` in [app/layout.tsx](app/layout.tsx).
 - **Email:** Resend ([lib/email.ts](lib/email.ts)). Confirmation send is best-effort — DB write succeeds even if Resend fails. If `RESEND_API_KEY` is unset, sending is silently skipped (local dev convenience).
 - **DB:** Prisma 7 + SQLite via the **`@prisma/adapter-better-sqlite3`** driver adapter. Prisma 7 requires an adapter — `new PrismaClient()` with no args fails type checks. See [lib/db.ts](lib/db.ts).
 - **Analytics:** Plausible (cookieless). Loaded only when `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` is set. **Never Google Analytics.**
-- **Hosting:** Vercel, deployable via `git push` with zero config. For Vercel, swap SQLite for Supabase/Neon by changing the adapter and `DATABASE_URL`.
+- **Hosting:** Strato VPS at `93.90.201.90`, behind nginx + PM2 (process name `fitbash`, port 3003). Production URL: https://fitbash.de. SSH key for deploys: `~/.ssh/coachtap_strato`. See [intro.md](intro.md) for the full deploy playbook (the older [DEPLOYMENT.md](DEPLOYMENT.md) describes a Vercel target that was never used — treat it as stale).
 - **Forms:** Native HTML + `/api/waitlist` route handler. No third-party form builders.
 
 ## Commands
@@ -31,67 +32,75 @@ npm run db:generate  # prisma generate (regenerate client only)
 npm run db:studio    # prisma studio for inspecting waitlist_signups
 ```
 
-`postinstall` runs `prisma generate` — needed because the generated client lives at [lib/generated/prisma](lib/generated/prisma) and is gitignored. **Don't import `@prisma/client` directly** — import `prisma` from [lib/db.ts](lib/db.ts), which wires the adapter.
+`postinstall` runs `prisma generate` — needed because the generated client lives at `lib/generated/prisma` and is gitignored. **Don't import `@prisma/client` directly** — import `prisma` from [lib/db.ts](lib/db.ts), which wires the adapter.
 
 ## Architecture
 
-- **Single-scroll landing page**, no client-side router. The home route is [app/page.tsx](app/page.tsx); section components live flat in [components/](components/), SVG illustrations in [components/illustrations/](components/illustrations/). The page is `force-dynamic` so the live waitlist count is always fresh.
-- **Two German legal placeholder routes:** [app/impressum/page.tsx](app/impressum/page.tsx) and [app/datenschutz/page.tsx](app/datenschutz/page.tsx). Both use `noindex`. Real legal content marked with `TODO` comments — confirm before launch.
-- **POST /api/waitlist** ([app/api/waitlist/route.ts](app/api/waitlist/route.ts)): validate → lowercase email → dedupe (idempotent: returns `{ok:true, alreadySubscribed:true}` for repeat) → store with `locale` (from `Accept-Language`), `source` (from request body, defaulted from `?ref=` on the page), and consent timestamp → send Resend confirmation (subject *"You're on the FitBash list."*, sender `marc@fitbash.com`, **never** `noreply@`).
-- **Hero waitlist count** is read live from the DB. On query failure or when count < `SIGNUP_COUNT_REVEAL_THRESHOLD` (50), the hero shows *"Be one of the first."* instead.
-- **OG image** at [app/opengraph-image.tsx](app/opengraph-image.tsx) is generated at build time via `next/og` `ImageResponse` — no static file to maintain.
-- **Structured data** (Organization JSON-LD) is injected in [app/layout.tsx](app/layout.tsx).
-- **Source attribution** flows: page reads `?ref=` from `searchParams` (capped at 64 chars, fallback `"direct"`) → passes to both `WaitlistForm` instances → form sends in POST body.
-- JS-disabled visitors can still read the content and find the Instagram link. The form requires JS — that's OK per the brief.
+- **Single-scroll landing page**, no client-side router. The home route is [app/page.tsx](app/page.tsx). Section components live flat in [components/](components/). Page is `force-dynamic` — kept dynamic so we can re-introduce per-request behavior cheaply.
+- **Section order** (top to bottom): `SiteHeader` → `Hero` (with the interactive `DuelDemo`) → `HowItWorks` → `WhyItWorks` → `FinalCTA` → `SiteFooter`. There is no SneakPeek, Founder, or FAQ section in the current design — those were dropped during a redesign and the "Built in Berlin" line lives as a bullet inside `WhyItWorks` instead.
+- **Two German legal placeholder routes:** [app/impressum/page.tsx](app/impressum/page.tsx) and [app/datenschutz/page.tsx](app/datenschutz/page.tsx). Both `noindex`. Real legal content marked with `TODO` — confirm before launch.
+- **POST /api/waitlist** ([app/api/waitlist/route.ts](app/api/waitlist/route.ts)): validate → lowercase email → store with `locale` (from `Accept-Language`), `source` (from body, defaulted from `?ref=` on the page), and `consentAt` → send Resend confirmation. **Idempotent:** repeat submissions return `{ok:true, alreadySubscribed:true}` rather than 409, so the form can show a friendly "Already on the list" state instead of an error.
+- **`WaitlistForm`** ([components/WaitlistForm.tsx](components/WaitlistForm.tsx)) is a client component shared by Hero and FinalCTA. It branches the success card based on `alreadySubscribed`: fresh signups get a coral checkmark + celebratory copy, repeats get an ink info icon + neutral copy. Each caller can override the success/duplicate copy via props (`successTitle`/`successBody`/`duplicateTitle`/`duplicateBody`).
+- **`DuelDemo`** ([components/DuelDemo.tsx](components/DuelDemo.tsx)) is a client component. It hard-codes a 63%/37% reveal — the hint after voting reads *"Demo only — real votes update live."* so the percentages aren't passed off as real waitlist data.
+- **OG image** at [app/opengraph-image.tsx](app/opengraph-image.tsx) generated at build time via `next/og` `ImageResponse`.
+- **Structured data** (Organization JSON-LD) in [app/layout.tsx](app/layout.tsx).
+- **Source attribution** flows: page reads `?ref=` (capped at 64 chars, fallback `"direct"`) → passes to both `WaitlistForm` instances → form sends in POST body.
+- JS-disabled visitors can read all content and find the Instagram link. The form requires JS — that's accepted per the brief.
 
-## Visual non-negotiables
+## Visual system
 
-- Background sage `#D8E1D0`, text `#0F0F0E`, single accent warm coral `#E2613D` (hover `#D95D3A`). Muted text `#5C615A`, hairline `#B8C5AC`. No other colors. Whitespace separates sections, not borders. (Brief originally specified `#FAFAF7` off-white; the user explicitly rejected that for a fitness-friendlier palette — stay on sage until they say otherwise.)
-- Inter variable font, weights **400 + 500 only** (never 600 / 700). Loaded via `next/font/google` in [app/layout.tsx](app/layout.tsx).
-- No gradients, no shadows (one exception: subtle email-input focus state), no glow, no parallax, no scroll-jacking, no sticky CTAs, no animated backgrounds. Allowed motion: 200ms one-shot fade-in (`.fb-fade-in`) and the hero duel SVG cycle. All animations honor `prefers-reduced-motion`.
-- Button system, in full: solid coral, white text, 14px / 24px padding, 8px radius, hover 4% darker. That's it.
-- Email input: transparent background, 1px bottom border only — editorial, not form-like.
-- No emoji in copy. No stock photos. Original SVG illustrations / phone mockups only.
-- Aesthetic reference: Linear, Things 3, Oura, Stripe. **Not Gymshark, not MyFitnessPal.** If the page could be mistaken for a Webflow template, it has failed.
+- **Palette:** background warm cream `#F4EEE2`, elevated surface `#FBF7EE`, pure surface `#FFFFFF` (cards), ink `#161311`, ink-soft `#4A433D`, ink-mute `#8B847C`, accent terracotta `#D94A2B` (hover/deep `#A8341B`, soft `#F7DCD2`). Hairlines via the `--color-line` / `--color-line-strong` variables (`rgba(22,19,17,0.10/0.18)`). The page also has a subtle SVG paper-grain noise overlay on `body::before`.
+- **Typography:** Fraunces serif for headlines, italic Fraunces (with `SOFT 100`) for inline accent words highlighted in coral. Hanken Grotesk sans for body, eyebrows, UI. The `.font-serif` utility wires the right `font-variation-settings` (`opsz 144, SOFT 30` default; `SOFT 100` on `<em>`).
+- **Allowed motion:** `.fb-fade-up` (entrance, with `.d1`–`.d5` stagger), `.fb-pulse` (the live-dot in the hero pill), `.fb-shake` (form on validation/network failure), `.fb-slide-up` (success card). All animations honor `prefers-reduced-motion`.
+- **Buttons / CTAs:** the primary signup button is a pill (`rounded-full`, ink fill, cream text, hover terracotta). The waitlist form is a single rounded-pill row containing input + button. No box shadows except the focus ring on the form (`box-shadow: 0 0 0 4px var(--color-accent-soft)`).
+- **No emoji in copy.** Original SVG only — no stock photos. The interactive duel cards use simple stylised gradients as placeholder thumbnails until real video frames are wired in.
 
-## Copy non-negotiables
+## Copy
 
-- **English only.** No language toggle.
-- Positioning line is fixed: *"Discover the exercises you'll actually keep doing."* Do not reword.
+- The page is in English. The "German-first, English available" line in `WhyItWorks` describes the *app's* roadmap, not the marketing site — there is no language switcher on the landing page.
+- The hero positioning is *"Two exercises. One duel. You decide."* with sub-headline *"Discover the workouts you'll actually keep doing…"*
 - Banned marketing verbs: revolutionize, transform, unleash, level up, crush. Rewrite anything that could appear on any other fitness landing page.
-- Honest about stage: pre-launch. No fake testimonials, no fabricated user counts, no pretending the app exists.
-- One promise per section. The page should read in under 90 seconds.
+- The "Free for the first 500 / Lifetime free access for early supporters" framing is a real offer — keep it consistent. If it changes, update both the hero note and the FinalCTA body.
+- Honest about stage: pre-launch. The duel demo's percentages are explicitly labelled as a demo. No fake testimonials.
 
 ## GDPR / DACH requirements
 
-- Consent checkbox above the submit button, **unticked by default**. Consent timestamp persisted on the row (`consentAt`).
+- Consent checkbox below the submit button, **unticked by default**. Submit is rejected (client and server) without consent. Timestamp persisted on the row (`consentAt`).
 - No pre-ticked boxes, no exit-intent popups, no dark patterns.
-- Impressum + Datenschutz reachable from every page footer. Placeholder content is fine for now; mark TODOs clearly.
+- Impressum + Datenschutz reachable from the footer. Placeholder content is fine for now; mark TODOs clearly.
 - No cookie banner — Plausible is cookieless and is the only tracking.
+
+## Production deploy (Strato)
+
+- App lives at `/home/deploy/fitbash` on the VPS, owned by `deploy` user.
+- Run under PM2 (`pm2-deploy.service` daemon) on port 3003 — process name `fitbash`.
+- nginx site at `/etc/nginx/sites-available/fitbash` proxies `fitbash.de` + `www.fitbash.de` → `127.0.0.1:3003`. TLS via Let's Encrypt (`certbot --nginx`, auto-renews via certbot's systemd timer).
+- **Redeploy after a code change** (zero-downtime hot reload):
+  ```bash
+  git push origin main
+  ssh -i ~/.ssh/coachtap_strato root@93.90.201.90 \
+    "su - deploy -c 'cd /home/deploy/fitbash && git pull --ff-only && npm install && npm run build && pm2 reload fitbash'"
+  ```
+- Environment variables live in `/home/deploy/fitbash/.env` on the server. To pick them up after editing, append `--update-env` to the `pm2 reload`.
+- Don't touch the other apps on this server (`coachtap` on port 3000, `kyrooapp` on port 3002 under a separate `pm2-root.service`) without explicit reason.
 
 ## Placeholder TODOs
 
-Confirm before launch (also tagged in code with `TODO:`):
-- Real Instagram handle in [lib/config.ts](lib/config.ts) (currently `fitbash.app`)
-- Real founder photo + bio in [components/Founder.tsx](components/Founder.tsx)
+Confirm before public launch (tagged in code with `TODO:` where applicable):
+- Real founder bio copy in [components/WhyItWorks.tsx](components/WhyItWorks.tsx) "Built in Berlin" bullet (currently generic)
 - Real Impressum and Datenschutz copy
-- `RESEND_FROM_EMAIL` mailbox is provisioned and the domain is verified in Resend
-- Production `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` set on the Vercel deployment
+- Real Resend `RESEND_API_KEY` + verified `fitbash.de` sending domain (SPF/DKIM/DMARC) so confirmation emails actually send
+- Production `NEXT_PUBLIC_PLAUSIBLE_DOMAIN=fitbash.de` set in `/home/deploy/fitbash/.env`
+- Replace the duel-card gradient placeholders with real video thumbnails when ready
 
 ## Out of scope (do not build)
 
-User accounts, blog, multi-language, any real app functionality (duels/votes), pricing page, live chat, A/B testing infra, cookie banner, newsletter platform integrations beyond simple waitlist storage.
-
-## When to ask before deciding
-
-The brief flags these as ask-first:
-1. Which email service if not Resend
-2. Hero visual — SVG animation (preferred, currently shipped) vs. autoplay-muted-loop video
-3. How much placeholder is acceptable in the founder section before real photo + bio are provided
+User accounts, blog, multi-language toggle, any real app functionality (duels/votes), pricing page, live chat, A/B testing infra, cookie banner, newsletter platform integrations beyond the simple waitlist.
 
 ## Verification before declaring done
 
-- `npm run typecheck` and `npm run build` clean
+- `npm run typecheck`, `npm run lint`, and `npm run build` all clean
+- `npm audit` shows no high/critical (transitive moderates may be pinned via the `overrides` block in [package.json](package.json) — see the existing `postcss` / `uuid` / `@hono/node-server` pins for the pattern)
 - Lighthouse 95+ on all metrics, mobile and desktop
-- Total page weight under 200kb excluding fonts
 - Render correctly in iOS Safari, Android Chrome, and the **Instagram in-app browser** (its webview has quirks that desktop testing won't catch — test on a real phone)
+- For UI changes: hard-reload the dev server in a browser; the duel demo, signup form (incl. duplicate detection), and footer links all need a click-through, not just an HTML grep
