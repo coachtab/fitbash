@@ -12,12 +12,12 @@ export function Hero({ source }: Props) {
           Early access · launching 2026
         </div>
 
-        <h1 className="fb-fade-up d2 mb-8 max-w-[14ch] font-serif text-[clamp(44px,7vw,88px)] font-normal leading-[0.98] tracking-[-0.035em]">
+        <h1 className="fb-fade-up d2 mb-8 max-w-[14ch] text-[clamp(44px,7vw,88px)] font-semibold leading-[0.98] tracking-[-0.04em]">
           Two exercises.
           <br />
           One duel.
           <br />
-          <em className="font-serif italic text-accent">You decide.</em>
+          <em className="italic font-medium text-accent">You decide.</em>
         </h1>
 
         <p className="fb-fade-up d3 mb-11 max-w-[52ch] text-[clamp(17px,1.6vw,20px)] leading-[1.5] text-ink-soft">

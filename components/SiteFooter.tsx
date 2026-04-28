@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[1180px] px-7">
         <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between md:flex-wrap">
           <div className="flex items-center gap-4.5 text-sm text-ink-mute">
-            <span className="font-serif text-lg">
+            <span className="text-base font-semibold tracking-[-0.025em]">
               fitbash<span className="text-accent">.</span>
             </span>
             <span>© {year} · Berlin</span>

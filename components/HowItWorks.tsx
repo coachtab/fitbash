@@ -20,19 +20,19 @@ export function HowItWorks() {
   return (
     <section id="how" className="px-7 pb-20 pt-30 md:pb-30 md:pt-40">
       <div className="mx-auto max-w-[1180px]">
-        <p className="mb-4 font-serif text-base italic tracking-[0.02em] text-accent">
+        <p className="mb-4 text-[12px] uppercase tracking-[0.18em] font-medium text-accent">
           How it works
         </p>
-        <h2 className="mb-16 max-w-[18ch] font-serif text-[clamp(34px,5vw,56px)] font-normal leading-[1.05] tracking-[-0.03em]">
+        <h2 className="mb-16 max-w-[18ch] text-[clamp(34px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.035em]">
           Stop scrolling routines. Start finding what fits.
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {steps.map(({ num, title, body }) => (
             <div key={num} className="border-t border-line-strong pt-7">
-              <div className="mb-4 font-serif text-sm font-medium tracking-[0.05em] text-accent">
+              <div className="mb-4 text-[12px] tabular-nums font-semibold tracking-[0.08em] text-accent">
                 {num}
               </div>
-              <h3 className="mb-3.5 font-serif text-[26px] font-normal leading-[1.15] tracking-[-0.015em]">
+              <h3 className="mb-3.5 text-[24px] font-semibold leading-[1.2] tracking-[-0.02em]">
                 {title}
               </h3>
               <p className="text-[15px] leading-[1.6] text-ink-soft">{body}</p>

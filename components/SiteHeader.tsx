@@ -4,7 +4,7 @@ export function SiteHeader() {
   return (
     <div className="mx-auto max-w-[1180px] px-7 md:px-7">
       <nav className="relative z-10 flex items-center justify-between py-7">
-        <a href="#top" className="font-serif text-[26px] font-medium tracking-[-0.02em]">
+        <a href="#top" className="text-[22px] font-semibold tracking-[-0.025em]">
           fitbash<span className="text-accent">.</span>
         </a>
         <div className="flex items-center gap-6">

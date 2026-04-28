@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Fraunces, Hanken_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { SITE_NAME, SITE_URL, TAGLINE, INSTAGRAM_URL } from "@/lib/config";
 
-const fraunces = Fraunces({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["SOFT", "opsz"],
-  display: "swap",
-});
-
-const hanken = Hanken_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-hanken-grotesk",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -57,7 +50,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
   return (
-    <html lang="en" className={`${fraunces.variable} ${hanken.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body>
         <script
           type="application/ld+json"

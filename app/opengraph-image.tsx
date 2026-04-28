@@ -12,8 +12,8 @@ export default function OGImage() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#F4EEE2",
-          color: "#161311",
+          background: "#D4E6F1",
+          color: "#0F1A24",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -42,7 +42,7 @@ export default function OGImage() {
             alignItems: "center",
             gap: 16,
             fontSize: 26,
-            color: "#4A433D",
+            color: "#3D4A57",
           }}
         >
           <div

@@ -19,14 +19,14 @@ export function WhyItWorks() {
       <div className="mx-auto max-w-[1180px]">
         <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-20">
           <div>
-            <p className="mb-4 font-serif text-base italic tracking-[0.02em] text-accent">
+            <p className="mb-4 text-[12px] uppercase tracking-[0.18em] font-medium text-accent">
               Why it&rsquo;s different
             </p>
-            <p className="font-serif text-[clamp(26px,3.4vw,38px)] font-normal leading-[1.2] tracking-[-0.02em]">
+            <p className="text-[clamp(26px,3.4vw,38px)] font-semibold leading-[1.2] tracking-[-0.025em]">
               Most fitness apps tell you what&rsquo;s optimal.
               <br />
               FitBash helps you find what&rsquo;s{" "}
-              <em className="italic text-accent">repeatable</em>.
+              <em className="italic font-medium text-accent">repeatable</em>.
             </p>
           </div>
           <div className="flex flex-col gap-7 pt-3">
