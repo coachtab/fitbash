@@ -1,6 +1,8 @@
 import { headers } from "next/headers";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Hero } from "@/components/Hero";
+import { WeekSchedule } from "@/components/WeekSchedule";
+import { Nutrition } from "@/components/Nutrition";
 import { HowItWorks } from "@/components/HowItWorks";
 import { WhyItWorks } from "@/components/WhyItWorks";
 import { FinalCTA } from "@/components/FinalCTA";
@@ -31,6 +33,8 @@ export default async function HomePage({
       <SiteHeader />
       <main>
         <Hero source={source} duelState={duelState} />
+        <WeekSchedule />
+        <Nutrition />
         <HowItWorks />
         <WhyItWorks />
         <FinalCTA source={source} />

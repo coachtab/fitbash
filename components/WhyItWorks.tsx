@@ -1,7 +1,7 @@
 const points = [
   {
-    title: "No prescriptions, no guilt",
-    body: "You're the expert on what you'll keep doing. We're just here to surface options you didn't know existed.",
+    title: "Themes, not chaos",
+    body: "Each week orbits one focus — legs, push, pull, core, conditioning. You stop deciding what to train and start deciding how to train it.",
   },
   {
     title: "Physio-reviewed library",

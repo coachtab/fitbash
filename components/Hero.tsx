@@ -1,5 +1,6 @@
 import { WaitlistForm } from "./WaitlistForm";
 import { DuelDemo } from "./DuelDemo";
+import { CURRENT_WEEK } from "@/lib/week";
 
 type DuelState = {
   hasVoted: boolean;
@@ -15,11 +16,11 @@ type Props = {
 
 export function Hero({ source, duelState }: Props) {
   return (
-    <section id="top" className="relative pb-24 pt-12 md:pb-28 md:pt-20">
+    <section id="top" className="relative pb-16 pt-12 md:pb-20 md:pt-20">
       <div className="mx-auto max-w-[1180px] px-7">
         <div className="fb-fade-up d1 mb-7 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3.5 py-1.5 text-[13px] font-medium tracking-[0.01em] text-accent-deep">
           <span aria-hidden className="fb-pulse h-[7px] w-[7px] rounded-full bg-accent" />
-          Early access · launching 2026
+          {CURRENT_WEEK.themeName} · {CURRENT_WEEK.todayLabel}
         </div>
 
         <h1 className="fb-fade-up d2 mb-8 max-w-[14ch] text-[clamp(44px,7vw,88px)] font-semibold leading-[0.98] tracking-[-0.04em]">
@@ -30,10 +31,9 @@ export function Hero({ source, duelState }: Props) {
           <em className="italic font-medium text-accent">You decide.</em>
         </h1>
 
-        <p className="fb-fade-up d3 mb-11 max-w-[52ch] text-[clamp(17px,1.6vw,20px)] leading-[1.5] text-ink-soft">
-          Discover the workouts you&rsquo;ll actually keep doing. Vote on daily exercise
-          matchups, see what the crowd picks, and build a routine that fits how you actually
-          train — not how you think you should.
+        <p className="fb-fade-up d3 mb-11 max-w-[58ch] text-[clamp(17px,1.6vw,20px)] leading-[1.5] text-ink-soft">
+          Each week, one theme. Five duels, Monday to Friday. Plus a nutrition motto. You vote
+          on what you&rsquo;d actually do — and by Friday, the routine is yours.
         </p>
 
         <div className="fb-fade-up d4">
