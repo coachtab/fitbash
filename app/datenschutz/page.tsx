@@ -51,7 +51,7 @@ export default function DatenschutzPage() {
             <section className="mt-8 space-y-3">
               <h2 className="text-lg font-semibold">Analyse</h2>
               <p className="text-ink-soft">
-                Wir verwenden Plausible Analytics — datenschutzfreundlich, ohne Cookies, ohne
+                Wir verwenden Plausible Analytics: datenschutzfreundlich, ohne Cookies, ohne
                 persönliche Daten. Ein Cookie-Banner ist deshalb nicht erforderlich.
               </p>
             </section>
@@ -82,7 +82,7 @@ export default function DatenschutzPage() {
                 >
                   info@fitbash.de
                 </a>
-                {" "}— wir bestätigen die Löschung unverzüglich.
+                . Wir bestätigen die Löschung unverzüglich.
               </p>
               <p className="text-ink-soft">
                 Darüber hinaus steht Ihnen das Recht zu, sich bei der zuständigen
@@ -96,7 +96,7 @@ export default function DatenschutzPage() {
             </section>
 
             <p className="mt-12 text-sm text-ink-mute">
-              Diese Seite ist ein Platzhalter — finale Inhalte folgen vor dem Launch.
+              Diese Seite ist ein Platzhalter. Finale Inhalte folgen vor dem Launch.
             </p>
           </div>
         </article>

@@ -46,7 +46,7 @@ export default function ImpressumPage() {
             </section>
 
             <p className="mt-12 text-sm text-ink-mute">
-              Diese Seite ist ein Platzhalter — finale Inhalte folgen vor dem Launch.
+              Diese Seite ist ein Platzhalter. Finale Inhalte folgen vor dem Launch.
             </p>
           </div>
         </article>

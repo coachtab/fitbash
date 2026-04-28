@@ -9,7 +9,7 @@ const points = [
   },
   {
     title: "Built in Berlin",
-    body: "German-first, English available. Made for home and dumbbell workouts at launch — gym and HYROX coming next.",
+    body: "German-first, English available. Made for home and dumbbell workouts at launch. Gym and HYROX coming next.",
   },
 ];
 

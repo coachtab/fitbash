@@ -17,7 +17,7 @@ function ExerciseLine({
         <span
           aria-hidden
           className="text-[10px] font-semibold text-accent leading-none translate-y-[-1px]"
-          title="Yesterday's winner — carried over"
+          title="Yesterday's winner, carried over"
         >
           ↗
         </span>

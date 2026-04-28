@@ -18,7 +18,7 @@ export function FinalCTA({ source }: Props) {
             source={source}
             submitLabel="Reserve my spot"
             successTitle="Spot reserved."
-            successBody="Watch your inbox — we'll be in touch."
+            successBody="Watch your inbox. We'll be in touch."
             duplicateTitle="Spot already reserved."
             duplicateBody="This email is already on the waitlist. We'll be in touch."
           />

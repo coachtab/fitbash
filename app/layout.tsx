@@ -13,14 +13,14 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — ${TAGLINE}`,
-    template: `%s — ${SITE_NAME}`,
+    default: `${SITE_NAME} · ${TAGLINE}`,
+    template: `%s · ${SITE_NAME}`,
   },
   description:
-    "Two exercises. One duel. You decide. FitBash is a daily exercise discovery app — vote on workout matchups, see what the crowd picks, and build a routine you'll actually stick to.",
+    "Two exercises. One duel. You decide. FitBash is a daily exercise discovery app. Vote on workout matchups, see what the crowd picks, and build a routine you'll actually stick to.",
   applicationName: SITE_NAME,
   openGraph: {
-    title: `${SITE_NAME} — Two exercises. One duel. You decide.`,
+    title: `${SITE_NAME} · Two exercises. One duel. You decide.`,
     description:
       "Daily exercise duels. Vote on matchups, see the crowd verdict, build a routine you'll actually stick to. Early access opening soon.",
     url: "/",

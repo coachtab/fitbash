@@ -328,7 +328,7 @@ export function DuelDemo({ initialState }: { initialState: DuelState }) {
 
       <p className="mt-8 text-center text-[13px] text-ink-mute">
         {state.hasVoted
-          ? "Thanks — your vote is locked in."
+          ? "Thanks. Your vote is locked in."
           : "Tap a photo to watch, or the heart to vote. One vote per visitor."}
       </p>
     </div>

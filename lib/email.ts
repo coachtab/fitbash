@@ -20,10 +20,11 @@ export async function sendWaitlistConfirmation(to: string): Promise<void> {
   const text = [
     `Thanks for signing up.`,
     ``,
-    `One email from me when ${SITE_NAME} is ready — that's the deal.`,
+    `One email from me when ${SITE_NAME} is ready. That's the deal.`,
     `Until then, the duels keep going daily on Instagram: @${INSTAGRAM_HANDLE}`,
     ``,
-    `— ${FOUNDER_NAME}`,
+    `Best,`,
+    `${FOUNDER_NAME}`,
   ].join("\n");
 
   await resend.emails.send({

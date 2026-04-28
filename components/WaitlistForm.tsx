@@ -56,7 +56,7 @@ export function WaitlistForm({
   successTitle = "You're on the list.",
   successBody = "We'll let you know when FitBash opens.",
   duplicateTitle = "Already on the list.",
-  duplicateBody = "We have your email — we'll be in touch when FitBash opens.",
+  duplicateBody = "We have your email. We'll be in touch when FitBash opens.",
   className = "",
 }: Props) {
   const emailId = useId();

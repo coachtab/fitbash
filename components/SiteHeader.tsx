@@ -7,7 +7,7 @@ export function SiteHeader() {
       <nav className="relative z-10 flex items-center justify-between py-7">
         <Link
           href="/"
-          aria-label="FitBash — back to home"
+          aria-label="FitBash, back to home"
           className="text-[22px] font-semibold tracking-[-0.025em]"
         >
           fitbash<span className="text-accent">.</span>

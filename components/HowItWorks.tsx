@@ -2,7 +2,7 @@ const steps = [
   {
     num: "01",
     title: "Theme drops Monday",
-    body: "Each week orbits one focus — Leg Week, Push Week, Pull Week, Core Week, Conditioning. Six exercises enter the bracket.",
+    body: "Each week orbits one focus: Leg Week, Push Week, Pull Week, Core Week, Conditioning. Six exercises enter the bracket.",
   },
   {
     num: "02",
