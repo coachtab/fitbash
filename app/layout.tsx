@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Inter } from "next/font/google";
+import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SITE_NAME, SITE_URL, TAGLINE, INSTAGRAM_URL } from "@/lib/config";
 
-const inter = Inter({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-fraunces",
+  axes: ["SOFT", "opsz"],
+  display: "swap",
+});
+
+const hanken = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-hanken-grotesk",
   display: "swap",
 });
 
@@ -16,11 +23,13 @@ export const metadata: Metadata = {
     default: `${SITE_NAME} — ${TAGLINE}`,
     template: `%s — ${SITE_NAME}`,
   },
-  description: TAGLINE,
+  description:
+    "Two exercises. One duel. You decide. FitBash is a daily exercise discovery app — vote on workout matchups, see what the crowd picks, and build a routine you'll actually stick to.",
   applicationName: SITE_NAME,
   openGraph: {
-    title: SITE_NAME,
-    description: TAGLINE,
+    title: `${SITE_NAME} — Two exercises. One duel. You decide.`,
+    description:
+      "Daily exercise duels. Vote on matchups, see the crowd verdict, build a routine you'll actually stick to. Early access opening soon.",
     url: "/",
     siteName: SITE_NAME,
     locale: "en_US",
@@ -48,8 +57,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-paper text-ink">
+    <html lang="en" className={`${fraunces.variable} ${hanken.variable}`}>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

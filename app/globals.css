@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #D8E1D0;
-  --color-paper-deep: #C5D2BB;
-  --color-ink: #0F0F0E;
-  --color-ink-soft: #1A1A18;
-  --color-cream: #F4EDDF;
-  --color-coral: #E2613D;
-  --color-coral-hover: #D95D3A;
-  --color-muted: #5C615A;
-  --color-muted-on-ink: #A6B19E;
-  --color-hairline: #B8C5AC;
-  --color-hairline-on-ink: #2A2D27;
+  --color-bg: #F4EEE2;
+  --color-bg-elevated: #FBF7EE;
+  --color-surface: #FFFFFF;
+  --color-ink: #161311;
+  --color-ink-soft: #4A433D;
+  --color-ink-mute: #8B847C;
+  --color-accent: #D94A2B;
+  --color-accent-soft: #F7DCD2;
+  --color-accent-deep: #A8341B;
+  --color-line: rgba(22, 19, 17, 0.10);
+  --color-line-strong: rgba(22, 19, 17, 0.18);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-fraunces), "Times New Roman", serif;
+  --font-sans: var(--font-hanken-grotesk), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 @layer base {
@@ -21,73 +22,93 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     color-scheme: light;
+    scroll-behavior: smooth;
   }
   body {
-    background-color: var(--color-paper);
+    background-color: var(--color-bg);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "cv11";
+    font-feature-settings: "ss01";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 17px;
-    line-height: 1.6;
-  }
-  @media (min-width: 768px) {
-    body {
-      font-size: 18px;
-    }
+    line-height: 1.55;
+    overflow-x: hidden;
   }
   ::selection {
-    background: var(--color-coral);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-bg);
   }
-  h1, h2, h3 {
-    letter-spacing: -0.018em;
-    line-height: 1.1;
+
+  /* Subtle paper-grain noise overlay — gives the cream canvas warmth without going Webflow */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+  main, nav, footer { position: relative; z-index: 2; }
+
+  /* Fraunces with light variation by default; italic em gets max softness for the in-line accents */
+  .font-serif {
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+  }
+  .font-serif em,
+  em.font-serif {
+    font-variation-settings: "opsz" 144, "SOFT" 100;
   }
 }
 
 @layer utilities {
-  .fb-fade-in {
-    animation: fb-fade-in 200ms ease-out both;
+  .fb-fade-up {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: fb-fade-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
-  @keyframes fb-fade-in {
-    from { opacity: 0; transform: translateY(4px); }
-    to   { opacity: 1; transform: translateY(0); }
+  .fb-fade-up.d1 { animation-delay: 0.05s; }
+  .fb-fade-up.d2 { animation-delay: 0.18s; }
+  .fb-fade-up.d3 { animation-delay: 0.31s; }
+  .fb-fade-up.d4 { animation-delay: 0.44s; }
+  .fb-fade-up.d5 { animation-delay: 0.57s; }
+  @keyframes fb-fade-up {
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .fb-duel-cycle {
-    animation: fb-duel 5.4s ease-in-out infinite;
+  .fb-pulse {
+    animation: fb-pulse 2s ease-in-out infinite;
   }
-  @keyframes fb-duel {
-    0%, 35%   { opacity: 1; }
-    50%, 90%  { opacity: 0.18; }
-    100%      { opacity: 1; }
+  @keyframes fb-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
   }
-  .fb-duel-cycle-b {
-    animation: fb-duel-b 5.4s ease-in-out infinite;
+
+  .fb-shake {
+    animation: fb-shake 0.4s;
   }
-  @keyframes fb-duel-b {
-    0%, 35%   { opacity: 0.18; }
-    50%, 90%  { opacity: 1; }
-    100%      { opacity: 0.18; }
+  @keyframes fb-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
   }
-  .fb-bar-fill {
-    transform-origin: left center;
-    animation: fb-bar 5.4s ease-in-out infinite;
+
+  .fb-slide-up {
+    animation: fb-slide-up 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  @keyframes fb-bar {
-    0%, 35%   { transform: scaleX(0); }
-    50%, 90%  { transform: scaleX(0.64); }
-    100%      { transform: scaleX(0); }
+  @keyframes fb-slide-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fb-fade-in,
-  .fb-duel-cycle,
-  .fb-duel-cycle-b,
-  .fb-bar-fill {
+  .fb-fade-up,
+  .fb-pulse,
+  .fb-shake,
+  .fb-slide-up {
     animation: none !important;
   }
+  html { scroll-behavior: auto; }
 }

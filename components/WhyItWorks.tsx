@@ -1,27 +1,50 @@
+const points = [
+  {
+    title: "No prescriptions, no guilt",
+    body: "You're the expert on what you'll keep doing. We're just here to surface options you didn't know existed.",
+  },
+  {
+    title: "Physio-reviewed library",
+    body: "Every exercise is checked by qualified trainers. Crowd votes are honest signal, not a popularity contest.",
+  },
+  {
+    title: "Built in Berlin",
+    body: "German-first, English available. Made for home and dumbbell workouts at launch — gym and HYROX coming next.",
+  },
+];
+
 export function WhyItWorks() {
   return (
-    <section
-      className="bg-ink text-cream px-6 py-32 md:py-40"
-      aria-labelledby="why-heading"
-    >
-      <div className="mx-auto max-w-5xl">
-        <p className="text-xs uppercase tracking-[0.22em] text-muted-on-ink">Why it works</p>
-        <h2
-          id="why-heading"
-          className="mt-6 text-[34px] md:text-[56px] lg:text-[68px] font-medium tracking-[-0.025em] leading-[1.05] text-balance"
-        >
-          Most fitness apps tell you what&rsquo;s
-          <span className="text-muted-on-ink"> optimal</span>.
-          <br />
-          We help you find what&rsquo;s
-          <span className="text-coral"> enjoyable</span>.
-        </h2>
-        <p className="mt-12 max-w-2xl text-lg md:text-xl text-muted-on-ink leading-relaxed">
-          The exercise you&rsquo;ll actually do beats the optimal one you skip. FitBash is a
-          tournament of small choices — between two exercises at a time — that quietly maps
-          the movements you don&rsquo;t mind, the ones you secretly like, and the ones
-          you&rsquo;ll come back to without being told.
-        </p>
+    <section className="px-7 pb-25 pt-20 md:pb-32 md:pt-24">
+      <div className="mx-auto max-w-[1180px]">
+        <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-20">
+          <div>
+            <p className="mb-4 font-serif text-base italic tracking-[0.02em] text-accent">
+              Why it&rsquo;s different
+            </p>
+            <p className="font-serif text-[clamp(26px,3.4vw,38px)] font-normal leading-[1.2] tracking-[-0.02em]">
+              Most fitness apps tell you what&rsquo;s optimal.
+              <br />
+              FitBash helps you find what&rsquo;s{" "}
+              <em className="italic text-accent">repeatable</em>.
+            </p>
+          </div>
+          <div className="flex flex-col gap-7 pt-3">
+            {points.map(({ title, body }) => (
+              <div key={title} className="flex gap-4.5">
+                <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-semibold text-accent-deep">
+                  →
+                </div>
+                <div>
+                  <h4 className="mb-1.5 text-base font-semibold tracking-[-0.005em]">
+                    {title}
+                  </h4>
+                  <p className="text-[15px] leading-[1.55] text-ink-soft">{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

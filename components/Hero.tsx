@@ -1,65 +1,42 @@
 import { WaitlistForm } from "./WaitlistForm";
-import { HeroDuel } from "./illustrations/HeroDuel";
-import { SIGNUP_COUNT_REVEAL_THRESHOLD } from "@/lib/config";
+import { DuelDemo } from "./DuelDemo";
 
-type Props = {
-  signupCount: number;
-  source: string;
-};
+type Props = { source: string };
 
-export function Hero({ signupCount, source }: Props) {
-  const showCount = signupCount >= SIGNUP_COUNT_REVEAL_THRESHOLD;
+export function Hero({ source }: Props) {
   return (
-    <section
-      id="top"
-      className="relative px-6 pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden"
-      aria-labelledby="hero-heading"
-    >
-      {/* Soft accent shape — subtle but present, signals "designed not templated" */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-24 -right-24 h-[420px] w-[420px] rounded-full bg-coral/15 blur-3xl md:h-[560px] md:w-[560px]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-32 -left-32 h-[360px] w-[360px] rounded-full bg-paper-deep blur-3xl"
-      />
+    <section id="top" className="relative pb-24 pt-12 md:pb-28 md:pt-20">
+      <div className="mx-auto max-w-[1180px] px-7">
+        <div className="fb-fade-up d1 mb-7 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3.5 py-1.5 text-[13px] font-medium tracking-[0.01em] text-accent-deep">
+          <span aria-hidden className="fb-pulse h-[7px] w-[7px] rounded-full bg-accent" />
+          Early access · launching 2026
+        </div>
 
-      <div className="relative mx-auto max-w-5xl fb-fade-in">
-        <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted">
-          <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-coral" />
-          In early development &middot; Berlin
-        </p>
-
-        <h1
-          id="hero-heading"
-          className="mt-8 text-[44px] sm:text-[60px] md:text-[84px] lg:text-[104px] font-medium tracking-[-0.03em] leading-[0.95] text-balance"
-        >
+        <h1 className="fb-fade-up d2 mb-8 max-w-[14ch] font-serif text-[clamp(44px,7vw,88px)] font-normal leading-[0.98] tracking-[-0.035em]">
           Two exercises.
           <br />
           One duel.
           <br />
-          <span className="text-coral">You decide.</span>
+          <em className="font-serif italic text-accent">You decide.</em>
         </h1>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-12 md:items-end gap-10 md:gap-16">
-          <div className="md:col-span-6">
-            <p className="text-lg md:text-xl text-muted text-balance max-w-md">
-              Discover the exercises you&rsquo;ll actually keep doing.
-            </p>
-            <div className="mt-10 max-w-md">
-              <WaitlistForm source={source} submitLabel="Get early access" />
-            </div>
-            <p className="mt-5 text-sm text-muted">
-              {showCount
-                ? `Joining ${signupCount.toLocaleString("en-US")} others on the waitlist`
-                : "Be one of the first."}
-            </p>
-          </div>
+        <p className="fb-fade-up d3 mb-11 max-w-[52ch] text-[clamp(17px,1.6vw,20px)] leading-[1.5] text-ink-soft">
+          Discover the workouts you&rsquo;ll actually keep doing. Vote on daily exercise
+          matchups, see what the crowd picks, and build a routine that fits how you actually
+          train — not how you think you should.
+        </p>
 
-          <div className="md:col-span-6 md:pl-6">
-            <HeroDuel className="w-full max-w-md md:max-w-none mx-auto h-auto" />
-          </div>
+        <div className="fb-fade-up d4">
+          <WaitlistForm source={source} submitLabel="Get early access" />
+        </div>
+
+        <p className="fb-fade-up d5 mt-3.5 flex items-center gap-2 text-[13px] text-ink-mute">
+          <span className="font-semibold text-accent">✓</span>
+          Free for the first 500. No spam, no fitness guilt-trips.
+        </p>
+
+        <div className="fb-fade-up d5">
+          <DuelDemo />
         </div>
       </div>
     </section>

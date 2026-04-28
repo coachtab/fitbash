@@ -1,36 +1,44 @@
-import { StepVote, StepReveal, StepBuild } from "./illustrations/StepIcons";
-
 const steps = [
-  { Icon: StepVote, title: "Vote", body: "Pick the exercise you’d actually do." },
-  { Icon: StepReveal, title: "Reveal", body: "See what everyone else picked, plus a coach’s note." },
-  { Icon: StepBuild, title: "Build", body: "Your favorites become a routine you’ll actually keep." },
+  {
+    num: "01",
+    title: "One duel a day",
+    body: "Two short clips, side by side. You pick the one you'd actually do. Three minutes, twenty matchups, done.",
+  },
+  {
+    num: "02",
+    title: "Crowd reveals the verdict",
+    body: "See what people training like you picked. Plus a coach note explaining why both work — or don't.",
+  },
+  {
+    num: "03",
+    title: "Your routine, by you",
+    body: "Your wins become a personal collection. Export it as a routine you'll actually open at the gym.",
+  },
 ];
 
 export function HowItWorks() {
   return (
-    <section className="px-6 py-24 md:py-32" aria-labelledby="how-heading">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-xs uppercase tracking-[0.18em] text-muted">How it works</p>
-        <h2
-          id="how-heading"
-          className="mt-3 max-w-xl text-[26px] md:text-[34px] font-medium tracking-tight"
-        >
-          Three small choices a day. That&rsquo;s the whole loop.
+    <section id="how" className="px-7 pb-20 pt-30 md:pb-30 md:pt-40">
+      <div className="mx-auto max-w-[1180px]">
+        <p className="mb-4 font-serif text-base italic tracking-[0.02em] text-accent">
+          How it works
+        </p>
+        <h2 className="mb-16 max-w-[18ch] font-serif text-[clamp(34px,5vw,56px)] font-normal leading-[1.05] tracking-[-0.03em]">
+          Stop scrolling routines. Start finding what fits.
         </h2>
-
-        <ol className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
-          {steps.map(({ Icon, title, body }, i) => (
-            <li key={title} className="flex flex-col">
-              <span className="text-sm tabular-nums text-coral">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="mt-4 h-px w-10 bg-hairline" />
-              <Icon className="mt-8 h-12 w-12" />
-              <h3 className="mt-6 text-xl font-medium">{title}</h3>
-              <p className="mt-2 text-muted">{body}</p>
-            </li>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          {steps.map(({ num, title, body }) => (
+            <div key={num} className="border-t border-line-strong pt-7">
+              <div className="mb-4 font-serif text-sm font-medium tracking-[0.05em] text-accent">
+                {num}
+              </div>
+              <h3 className="mb-3.5 font-serif text-[26px] font-normal leading-[1.15] tracking-[-0.015em]">
+                {title}
+              </h3>
+              <p className="text-[15px] leading-[1.6] text-ink-soft">{body}</p>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );

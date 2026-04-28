@@ -12,8 +12,8 @@ export default function OGImage() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#D8E1D0",
-          color: "#0F0F0E",
+          background: "#F4EEE2",
+          color: "#161311",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -42,7 +42,7 @@ export default function OGImage() {
             alignItems: "center",
             gap: 16,
             fontSize: 26,
-            color: "#5C615A",
+            color: "#4A433D",
           }}
         >
           <div
@@ -50,7 +50,7 @@ export default function OGImage() {
               width: 14,
               height: 14,
               borderRadius: 7,
-              background: "#E2613D",
+              background: "#D94A2B",
             }}
           />
           Two exercises. One duel. You decide.
