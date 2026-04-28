@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { INSTAGRAM_HANDLE, INSTAGRAM_URL, FOUNDER_FROM_EMAIL } from "@/lib/config";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL, PUBLIC_CONTACT_EMAIL } from "@/lib/config";
 
 export function SiteFooter() {
   const year = new Date().getUTCFullYear();
@@ -23,10 +23,10 @@ export function SiteFooter() {
               @{INSTAGRAM_HANDLE}
             </a>
             <a
-              href={`mailto:${FOUNDER_FROM_EMAIL}`}
+              href={`mailto:${PUBLIC_CONTACT_EMAIL}`}
               className="text-ink-soft hover:text-accent transition-colors"
             >
-              {FOUNDER_FROM_EMAIL}
+              {PUBLIC_CONTACT_EMAIL}
             </a>
             <Link
               href="/datenschutz"

@@ -12,7 +12,7 @@ A reusable playbook to drop into every new project. Replace each `<PLACEHOLDER>`
 | `<DOMAIN>` | `fitbash.de` | apex; `www.<DOMAIN>` is added as an alias |
 | `<PORT>` | `3003` | pick a free one — see *Used ports* below |
 | `<DB>` | `SQLite` / `Postgres in Docker` | SQLite for waitlist/marketing; Postgres for real apps |
-| `<EMAIL_FROM>` | `marc@<DOMAIN>` | sender address; mailbox must exist on a verified sending domain |
+| `<EMAIL_FROM>` | `damian@<DOMAIN>` | sender address; mailbox must exist on a verified sending domain |
 
 ---
 

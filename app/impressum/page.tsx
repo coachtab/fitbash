@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SITE_NAME } from "@/lib/config";
 
@@ -10,43 +11,47 @@ export const metadata: Metadata = {
 
 export default function ImpressumPage() {
   return (
-    <main>
-      <article className="px-6 py-20 md:py-28">
-        <div className="mx-auto max-w-2xl">
-          <h1 className="text-[28px] md:text-[40px] font-medium tracking-tight">Impressum</h1>
-          <p className="mt-6 text-muted">
-            Angaben gemäß § 5 TMG.
-          </p>
+    <>
+      <SiteHeader />
+      <main>
+        <article className="mx-auto max-w-[1180px] px-7 pb-24 pt-12 md:pb-32 md:pt-20">
+          <div className="mx-auto max-w-2xl">
+            <h1 className="text-[clamp(36px,5vw,56px)] font-semibold tracking-[-0.035em]">
+              Impressum
+            </h1>
+            <p className="mt-6 text-ink-soft">Angaben gemäß § 5 TMG.</p>
 
-          {/* TODO: replace placeholders with the real legal entity, address, and contact */}
-          <section className="mt-10 space-y-2">
-            <h2 className="text-lg font-medium">Anbieter</h2>
-            <p className="text-muted">TODO — vollständiger Name / Firmenname</p>
-            <p className="text-muted">TODO — Straße und Hausnummer</p>
-            <p className="text-muted">TODO — PLZ und Ort, Deutschland</p>
-          </section>
+            <section className="mt-10 space-y-1.5">
+              <h2 className="text-lg font-semibold">Anbieter</h2>
+              <p className="text-ink-soft">Damian Kamara</p>
+              {/* TODO: add postal address (Straße, PLZ, Ort) before public launch — required by § 5 TMG */}
+            </section>
 
-          <section className="mt-8 space-y-2">
-            <h2 className="text-lg font-medium">Kontakt</h2>
-            <p className="text-muted">E-Mail: TODO</p>
-          </section>
+            <section className="mt-8 space-y-1.5">
+              <h2 className="text-lg font-semibold">Kontakt</h2>
+              <p className="text-ink-soft">
+                E-Mail:{" "}
+                <a
+                  href="mailto:info@fitbash.de"
+                  className="text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent transition-colors"
+                >
+                  info@fitbash.de
+                </a>
+              </p>
+            </section>
 
-          <section className="mt-8 space-y-2">
-            <h2 className="text-lg font-medium">Verantwortlich für den Inhalt</h2>
-            <p className="text-muted">TODO — Name und Anschrift gemäß § 18 Abs. 2 MStV</p>
-          </section>
+            <section className="mt-8 space-y-1.5">
+              <h2 className="text-lg font-semibold">Verantwortlich für den Inhalt</h2>
+              <p className="text-ink-soft">Damian Kamara</p>
+            </section>
 
-          <section className="mt-8 space-y-2">
-            <h2 className="text-lg font-medium">Umsatzsteuer-ID</h2>
-            <p className="text-muted">TODO — falls vorhanden, gemäß § 27 a UStG</p>
-          </section>
-
-          <p className="mt-12 text-sm text-muted">
-            Diese Seite ist ein Platzhalter — finale Inhalte folgen vor dem Launch.
-          </p>
-        </div>
-      </article>
+            <p className="mt-12 text-sm text-ink-mute">
+              Diese Seite ist ein Platzhalter — finale Inhalte folgen vor dem Launch.
+            </p>
+          </div>
+        </article>
+      </main>
       <SiteFooter />
-    </main>
+    </>
   );
 }
