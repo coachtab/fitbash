@@ -51,8 +51,8 @@ function HeartIcon({ filled, animate }: { filled: boolean; animate: boolean }) {
     <svg
       key={animate ? "liked" : "neutral"}
       viewBox="0 0 24 24"
-      width="20"
-      height="20"
+      width="18"
+      height="18"
       fill={filled ? "currentColor" : "none"}
       stroke="currentColor"
       strokeWidth="1.8"
@@ -72,15 +72,25 @@ function VotedStamp() {
       className="fb-slide-up pointer-events-none absolute inset-0 grid place-items-center"
       aria-hidden
     >
-      <span className="-rotate-12 rounded-md border-[3px] border-white/95 bg-accent/90 px-5 py-1.5 text-[26px] font-extrabold uppercase tracking-[0.18em] text-white shadow-[0_8px_24px_rgba(15,26,36,0.35)]">
+      <span className="-rotate-12 rounded-md border-[3px] border-white/95 bg-accent/90 px-4 py-1 text-[20px] font-extrabold uppercase tracking-[0.18em] text-white shadow-[0_8px_24px_rgba(15,26,36,0.35)]">
         Voted
       </span>
     </div>
   );
 }
 
-function DuelCard({
+/** Tailwind classes for the resting tilt of each Polaroid.
+ * Both cards keep the same small bend in every state — the picked one is
+ * distinguished by scale + z-index, not by straightening. */
+function tiltClasses(side: Choice, picked: boolean): string {
+  const tilt = side === "a" ? "md:-rotate-[5deg]" : "md:rotate-[5deg]";
+  if (picked) return `${tilt} md:scale-[1.04] z-30`;
+  return `${tilt} md:hover:scale-[1.03]`;
+}
+
+function Polaroid({
   card,
+  side,
   picked,
   hasVoted,
   isLoser,
@@ -91,6 +101,7 @@ function DuelCard({
   onStop,
 }: {
   card: CardData;
+  side: Choice;
   picked: boolean;
   hasVoted: boolean;
   isLoser: boolean;
@@ -100,18 +111,13 @@ function DuelCard({
   onPlay: () => void;
   onStop: () => void;
 }) {
-  const wrapperBorder = picked
-    ? "border-accent [box-shadow:0_0_0_3px_var(--color-accent-soft)]"
-    : "border-line";
-  const dimmed = isLoser
-    ? "opacity-40 grayscale-[0.4]"
-    : "";
-  const lockHover = hasVoted || isPlaying;
+  const tilt = tiltClasses(side, picked);
+  const dim = isLoser ? "opacity-50 grayscale-[0.5]" : "";
   return (
     <div
-      className={`group relative overflow-hidden rounded-[20px] border bg-surface transition-all duration-[300ms] [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] ${
-        lockHover ? "" : "hover:-translate-y-0.5 hover:border-ink"
-      } ${wrapperBorder} ${dimmed}`}
+      className={`relative w-[260px] sm:w-[280px] md:w-[300px] shrink-0 bg-white p-3 pb-16 shadow-[0_18px_36px_-12px_rgba(15,26,36,0.32),0_4px_10px_-2px_rgba(15,26,36,0.12)] transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] ${tilt} ${dim} ${
+        picked ? "" : "hover:z-20"
+      }`}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-ink">
         {isPlaying ? (
@@ -138,7 +144,7 @@ function DuelCard({
             type="button"
             onClick={onPlay}
             aria-label={`Watch ${card.name} video`}
-            className="block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+            className="group/play block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -147,8 +153,8 @@ function DuelCard({
               loading="lazy"
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 grid place-items-center bg-ink/0 transition-colors group-hover:bg-ink/15">
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-white/95 transition-transform group-hover:scale-[1.08]">
+            <div className="absolute inset-0 grid place-items-center bg-ink/0 transition-colors group-hover/play:bg-ink/15">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-white/95 transition-transform group-hover/play:scale-[1.08]">
                 {playIcon}
               </span>
             </div>
@@ -157,10 +163,12 @@ function DuelCard({
         {picked && !isPlaying ? <VotedStamp /> : null}
       </div>
 
-      <div className="flex items-center justify-between gap-4 p-6">
-        <div className="min-w-0">
-          <div className="truncate text-base font-semibold tracking-[-0.01em]">{card.name}</div>
-          <div className="mt-1 text-[13px] text-ink-mute">{card.meta}</div>
+      <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-[15px] font-semibold tracking-[-0.01em] text-ink">
+            {card.name}
+          </div>
+          <div className="mt-0.5 truncate text-[11px] italic text-ink-mute">{card.meta}</div>
         </div>
         <button
           type="button"
@@ -173,12 +181,12 @@ function DuelCard({
                 ? `Voting closed for ${card.name}`
                 : `Like ${card.name}`
           }
-          className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:scale-90 disabled:cursor-not-allowed ${
+          className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:scale-90 disabled:cursor-not-allowed ${
             picked
-              ? "border-accent bg-accent text-bg scale-105"
+              ? "border-accent bg-accent text-white scale-110"
               : hasVoted
-                ? "border-line bg-surface text-ink-mute"
-                : "border-line-strong bg-surface text-ink-soft hover:border-ink hover:text-ink"
+                ? "border-line bg-white text-ink-mute"
+                : "border-line-strong bg-white text-ink-soft hover:border-ink hover:text-ink"
           }`}
         >
           <HeartIcon filled={picked} animate={picked} />
@@ -246,17 +254,18 @@ export function DuelDemo({ initialState }: { initialState: DuelState }) {
   const bPct = pct(state.totalB, total);
 
   return (
-    <div className="relative mt-24 rounded-[32px] border border-line bg-bg-elevated p-9 md:p-15 md:px-10 md:py-15">
+    <div className="relative mt-24 rounded-[32px] border border-line bg-bg-elevated p-9 md:px-10 md:pb-16 md:pt-14 overflow-hidden">
       <p className="mb-2 text-center text-[12px] uppercase tracking-[0.18em] text-ink-mute font-medium">
         A quick taste
       </p>
-      <h2 className="mb-12 text-center text-[clamp(28px,4vw,40px)] font-semibold tracking-[-0.025em]">
+      <h2 className="mb-14 text-center text-[clamp(28px,4vw,40px)] font-semibold tracking-[-0.025em]">
         Which would you actually do?
       </h2>
 
-      <div className="mx-auto grid max-w-[720px] grid-cols-1 items-center gap-4 md:grid-cols-[1fr_auto_1fr] md:gap-6">
-        <DuelCard
+      <div className="relative mx-auto flex flex-col items-center justify-center gap-12 md:flex-row md:gap-12 lg:gap-16">
+        <Polaroid
           card={cards[0]}
+          side="a"
           picked={state.choice === "a"}
           hasVoted={state.hasVoted}
           isLoser={state.hasVoted && state.choice !== "a"}
@@ -266,9 +275,9 @@ export function DuelDemo({ initialState }: { initialState: DuelState }) {
           onPlay={() => setPlaying("a")}
           onStop={() => setPlaying(null)}
         />
-        <div className="text-center text-[22px] font-medium italic text-ink-mute">vs</div>
-        <DuelCard
+        <Polaroid
           card={cards[1]}
+          side="b"
           picked={state.choice === "b"}
           hasVoted={state.hasVoted}
           isLoser={state.hasVoted && state.choice !== "b"}
@@ -281,7 +290,7 @@ export function DuelDemo({ initialState }: { initialState: DuelState }) {
       </div>
 
       <div
-        className={`mx-auto mt-6 max-w-[480px] transition-opacity duration-[400ms] ${
+        className={`mx-auto mt-16 max-w-[480px] transition-opacity duration-[400ms] ${
           showResult ? "opacity-100" : "opacity-0"
         }`}
         aria-live="polite"
@@ -320,7 +329,7 @@ export function DuelDemo({ initialState }: { initialState: DuelState }) {
       <p className="mt-8 text-center text-[13px] text-ink-mute">
         {state.hasVoted
           ? "Thanks — your vote is locked in."
-          : "Tap the thumbnail to watch, or the heart to vote. One vote per visitor."}
+          : "Tap a photo to watch, or the heart to vote. One vote per visitor."}
       </p>
     </div>
   );
