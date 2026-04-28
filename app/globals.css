@@ -104,6 +104,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Reset the entrance state so content stays visible when animation is disabled.
+     Without this, elements wrapped in .fb-fade-up are stuck at opacity:0 because the
+     animation that would lift them to opacity:1 never runs. */
+  .fb-fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
   .fb-fade-up,
   .fb-pulse,
   .fb-shake,
