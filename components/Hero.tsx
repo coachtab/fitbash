@@ -32,8 +32,9 @@ export function Hero({ source, duelState }: Props) {
         </h1>
 
         <p className="fb-fade-up d3 mb-11 max-w-[58ch] text-[clamp(17px,1.6vw,20px)] leading-[1.5] text-ink-soft">
-          Each week, one theme. Five duels, Monday to Friday. Plus a nutrition motto. You vote
-          on what you&rsquo;d actually do — and by Friday, the routine is yours.
+          Each week, one theme. Five duels, Monday to Friday — and yesterday&rsquo;s winner
+          comes back today to face a fresh challenger. By Friday, only one exercise is still
+          standing. That&rsquo;s your Champion.
         </p>
 
         <div className="fb-fade-up d4">

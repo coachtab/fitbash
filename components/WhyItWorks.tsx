@@ -1,11 +1,11 @@
 const points = [
   {
     title: "Themes, not chaos",
-    body: "Each week orbits one focus — legs, push, pull, core, conditioning. You stop deciding what to train and start deciding how to train it.",
+    body: "Each week orbits one focus. You stop deciding what to train and start deciding how to train it.",
   },
   {
-    title: "Physio-reviewed library",
-    body: "Every exercise is checked by qualified trainers. Crowd votes are honest signal, not a popularity contest.",
+    title: "The hill never lies",
+    body: "Yesterday's winner has to defend its spot every day. By Friday, the only exercise left standing is the one people actually want to do.",
   },
   {
     title: "Built in Berlin",

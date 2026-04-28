@@ -2,17 +2,17 @@ const steps = [
   {
     num: "01",
     title: "Theme drops Monday",
-    body: "Each week orbits one focus — Leg Week, Push Week, Pull Week, Core Week, Conditioning. You know what you're working on before you've made a single choice.",
+    body: "Each week orbits one focus — Leg Week, Push Week, Pull Week, Core Week, Conditioning. Six exercises enter the bracket.",
   },
   {
     num: "02",
-    title: "One duel a day, Mon–Fri",
-    body: "Two short clips, side by side. You pick the one you'd actually do. Five duels, three minutes each — that's the whole week.",
+    title: "Yesterday's winner returns",
+    body: "Mon: two fresh exercises duel. Tue–Fri: yesterday's winner is back, facing a brand-new challenger. You vote on the one you'd actually do.",
   },
   {
     num: "03",
-    title: "Friday: routine + nutrition",
-    body: "Your wins from the week become a personal collection. Plus a nutrition motto for the theme. Open it at the gym, eat it during the week.",
+    title: "Friday: a Champion",
+    body: "Five days. One exercise that survived every vote. The Champion of the week is the cornerstone of the routine you'll actually keep.",
   },
 ];
 
@@ -23,8 +23,8 @@ export function HowItWorks() {
         <p className="mb-4 text-[12px] uppercase tracking-[0.18em] font-medium text-accent">
           How it works
         </p>
-        <h2 className="mb-16 max-w-[18ch] text-[clamp(34px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.035em]">
-          Five duels. One theme. The routine writes itself.
+        <h2 className="mb-16 max-w-[20ch] text-[clamp(34px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.035em]">
+          One theme. Five battles. A real Champion by Friday.
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {steps.map(({ num, title, body }) => (
