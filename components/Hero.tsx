@@ -1,9 +1,19 @@
 import { WaitlistForm } from "./WaitlistForm";
 import { DuelDemo } from "./DuelDemo";
 
-type Props = { source: string };
+type DuelState = {
+  hasVoted: boolean;
+  choice: "a" | "b" | null;
+  totalA: number;
+  totalB: number;
+};
 
-export function Hero({ source }: Props) {
+type Props = {
+  source: string;
+  duelState: DuelState;
+};
+
+export function Hero({ source, duelState }: Props) {
   return (
     <section id="top" className="relative pb-24 pt-12 md:pb-28 md:pt-20">
       <div className="mx-auto max-w-[1180px] px-7">
@@ -36,7 +46,7 @@ export function Hero({ source }: Props) {
         </p>
 
         <div className="fb-fade-up d5">
-          <DuelDemo />
+          <DuelDemo initialState={duelState} />
         </div>
       </div>
     </section>

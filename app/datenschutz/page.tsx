@@ -29,7 +29,14 @@ export default function DatenschutzPage() {
                 Wenn Sie sich auf die Warteliste eintragen, speichern wir Ihre E-Mail-Adresse,
                 den Zeitpunkt Ihrer Einwilligung, die Sprache Ihres Browsers (Accept-Language)
                 sowie eine optionale Quellenangabe (z.&nbsp;B. <code>?ref=instagram</code>).
-                Mehr nicht.
+              </p>
+              <p className="text-ink-soft">
+                Wenn Sie an der Beispiel-Abstimmung im Hero-Bereich teilnehmen, speichern wir
+                ausschließlich einen kryptografischen Hash Ihrer IP-Adresse zusammen mit Ihrer
+                Stimme. Der Hash wird mit einem serverseitigen Salt erzeugt; die ursprüngliche
+                IP-Adresse wird nicht protokolliert und kann aus dem Hash nicht rekonstruiert
+                werden. Damit verhindern wir Mehrfachabstimmungen, ohne Sie identifizieren zu
+                können.
               </p>
             </section>
 

@@ -17,3 +17,16 @@ model WaitlistSignup {
 
   @@map("waitlist_signups")
 }
+
+// One vote per IP enforced via the unique constraint on ipHash.
+// IPs are hashed server-side with DUEL_VOTE_SALT before storage — raw IPs are
+// never written to disk so we don't process personal data under GDPR Art. 4(1).
+model DuelVote {
+  id        Int      @id @default(autoincrement())
+  ipHash    String   @unique
+  choice    String
+  createdAt DateTime @default(now())
+
+  @@index([choice])
+  @@map("duel_votes")
+}
