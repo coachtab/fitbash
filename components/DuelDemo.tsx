@@ -148,7 +148,7 @@ function Polaroid({
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`https://img.youtube.com/vi/${card.videoId}/hqdefault.jpg`}
+              src={`/thumbs/${card.videoId}.jpg`}
               alt={`${card.name} demonstration`}
               loading="lazy"
               className="absolute inset-0 h-full w-full object-cover"
