@@ -58,7 +58,7 @@ function ScheduleCard({ duel, isFinal }: { duel: WeekDuel; isFinal: boolean }) {
         isToday
           ? "border-accent bg-white shadow-[0_8px_24px_-12px_rgba(15,26,36,0.18)]"
           : isPast
-            ? "border-line bg-bg-elevated opacity-60"
+            ? "border-transparent bg-accent-soft"
             : "border-line bg-bg-elevated"
       }`}
     >
