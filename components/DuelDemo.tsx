@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { EXERCISES } from "@/lib/exercises";
 
 type Choice = "a" | "b";
 type Playing = Choice | null;
@@ -20,8 +21,8 @@ type CardData = {
 };
 
 const cards: CardData[] = [
-  { id: "a", name: "Bulgarian split squat", meta: "Legs · dumbbell · 0:08", videoId: "uBSoEWZu07k" },
-  { id: "b", name: "Romanian deadlift", meta: "Legs · barbell · 0:08", videoId: "_TchJLlBO-4" },
+  { id: "a", ...EXERCISES["bulgarian-split-squat"] },
+  { id: "b", ...EXERCISES["romanian-deadlift"] },
 ];
 
 const playIcon = (
@@ -79,6 +80,26 @@ function VotedStamp() {
   );
 }
 
+/**
+ * Designed placeholder shown if /thumbs/{videoId}.jpg fails to load.
+ * Better than rendering broken-image alt text; the build-time sync script
+ * normally prevents this from ever showing in production.
+ */
+function ExerciseFallback({ name }: { name: string }) {
+  return (
+    <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_30%_22%,rgba(217,74,43,0.55),rgba(15,26,36,1)_72%)] p-5 text-center">
+      <div>
+        <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-white/55">
+          Exercise preview
+        </p>
+        <p className="mx-auto mt-2 max-w-[14ch] text-[18px] font-semibold leading-tight text-white">
+          {name}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 /** Tailwind classes for the resting tilt of each Polaroid.
  * Both cards keep the same small bend in every state — the picked one is
  * distinguished by scale + z-index, not by straightening. */
@@ -113,6 +134,7 @@ function Polaroid({
 }) {
   const tilt = tiltClasses(side, picked);
   const dim = isLoser ? "opacity-50 grayscale-[0.5]" : "";
+  const [thumbOk, setThumbOk] = useState(true);
   return (
     <div
       className={`relative w-[260px] sm:w-[280px] md:w-[300px] shrink-0 bg-white p-3 pb-16 shadow-[0_18px_36px_-12px_rgba(15,26,36,0.32),0_4px_10px_-2px_rgba(15,26,36,0.12)] transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] ${tilt} ${dim} ${
@@ -146,13 +168,18 @@ function Polaroid({
             aria-label={`Watch ${card.name} video`}
             className="group/play block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`/thumbs/${card.videoId}.jpg`}
-              alt={`${card.name} demonstration`}
-              loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
+            {thumbOk ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={`/thumbs/${card.videoId}.jpg`}
+                alt={`${card.name} demonstration`}
+                loading="lazy"
+                onError={() => setThumbOk(false)}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              <ExerciseFallback name={card.name} />
+            )}
             <div className="absolute inset-0 grid place-items-center bg-ink/0 transition-colors group-hover/play:bg-ink/15">
               <span className="grid h-12 w-12 place-items-center rounded-full bg-white/95 transition-transform group-hover/play:scale-[1.08]">
                 {playIcon}
