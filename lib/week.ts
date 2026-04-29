@@ -39,7 +39,7 @@ export type WeekContent = {
 export const CURRENT_WEEK: WeekContent = {
   themeName: "Leg Week",
   dateRange: "Apr 27 – May 1",
-  todayLabel: "Tue · Day 2 of 5",
+  todayLabel: "Wed · Day 3 of 5",
   duels: [
     {
       day: "Mon",
@@ -50,20 +50,21 @@ export const CURRENT_WEEK: WeekContent = {
       leftIsChampion: false,
       winner: "right",
     },
-    // Today: yesterday's winner (Goblet squat) vs today's challenger (Bulgarian split squat).
     {
       day: "Tue",
       date: "Apr 28",
-      status: "today",
+      status: "past",
       left: "Goblet squat",
       right: "Bulgarian split squat",
       leftIsChampion: true,
+      winner: "right",
     },
+    // Today: yesterday's winner (Bulgarian split squat) vs today's challenger (Romanian deadlift).
     {
       day: "Wed",
       date: "Apr 29",
-      status: "upcoming",
-      left: "Tue's winner",
+      status: "today",
+      left: "Bulgarian split squat",
       right: "Romanian deadlift",
       leftIsChampion: true,
     },

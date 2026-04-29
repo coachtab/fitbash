@@ -21,7 +21,7 @@ type CardData = {
 
 const cards: CardData[] = [
   { id: "a", name: "Bulgarian split squat", meta: "Legs · dumbbell · 0:08", videoId: "uBSoEWZu07k" },
-  { id: "b", name: "Goblet squat", meta: "Legs · dumbbell · 0:08", videoId: "lRYBbchqxtI" },
+  { id: "b", name: "Romanian deadlift", meta: "Legs · barbell · 0:08", videoId: "_TchJLlBO-4" },
 ];
 
 const playIcon = (
@@ -306,7 +306,7 @@ export function DuelDemo({ initialState }: { initialState: DuelState }) {
           />
         </div>
         <div className="mb-1.5 flex justify-between text-[13px] text-ink-soft">
-          <span>Goblet squat</span>
+          <span>Romanian deadlift</span>
           <span className="tabular-nums">{bPct}%</span>
         </div>
         <div className="mb-3.5 h-1.5 overflow-hidden rounded-full bg-line">
