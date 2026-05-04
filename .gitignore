@@ -52,3 +52,6 @@ next-env.d.ts
 
 # Claude Code per-machine settings (paths and permission rules are local-only)
 /.claude/
+
+# Local-only operator playbook — contains server creds + machine paths, never publish
+/intro.md
