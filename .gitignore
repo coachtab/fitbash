@@ -55,3 +55,6 @@ next-env.d.ts
 
 # Local-only operator playbook — contains server creds + machine paths, never publish
 /intro.md
+
+# Local-only identity / scrub runbook — references work email, never publish
+/IDENTITY.md
